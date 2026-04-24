@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pocket Web Editor</title>
+    <style>
+        body { font-family: sans-serif; background: #222; color: white; margin: 0; }
+        .header { background: #004d40; padding: 15px; text-align: center; font-weight: bold; }
+        .editor-layout { display: flex; height: 90vh; }
+        
+        /* Brick Toolbox */
+        .toolbox { width: 180px; background: #333; padding: 10px; border-right: 2px solid #444; }
+        .brick-btn { 
+            width: 100%; padding: 12px; margin-bottom: 8px; border: none; border-radius: 5px;
+            color: white; cursor: pointer; font-weight: bold; text-align: left;
+        }
+        
+        /* Workspace where bricks go */
+        .workspace { flex-grow: 1; padding: 20px; overflow-y: auto; }
+        .placed-brick { 
+            padding: 15px; margin-bottom: 5px; border-radius: 4px; 
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .delete-btn { background: rgba(0,0,0,0.2); border: none; color: white; cursor: pointer; border-radius: 3px; }
+    </style>
+</head>
+<body>
+
+<div class="header">POCKET WEB EDITOR (Demo: 5 Project Limit)</div>
+
+<div class="editor-layout">
+    <!-- Brick Categories -->
+    <div class="toolbox">
+        <button class="brick-btn" style="background: #f1c40f;" onclick="addBrick('When Started', '#f1c40f')">+ When Started</button>
+        <button class="brick-btn" style="background: #3498db;" onclick="addBrick('Move 10 Steps', '#3498db')">+ Move 10 Steps</button>
+        <button class="brick-btn" style="background: #9b59b6;" onclick="addBrick('Set Size to 50%', '#9b59b6')">+ Set Size</button>
+        <button class="brick-btn" style="background: #e67e22;" onclick="addBrick('Wait 1 Sec', '#e67e22')">+ Wait 1 Sec</button>
+    </div>
+
+    <!-- Script Area -->
+    <div class="workspace" id="script-area">
+        <p style="color: #888;">Click a brick on the left to add it to your script...</p>
+    </div>
+</div>
+
+<script>
+    function addBrick(text, color) {
+        const area = document.getElementById('script-area');
+        
+        // Remove the placeholder text on first click
+        if (area.children.length === 1 && area.children[0].tagName === 'P') {
+            area.innerHTML = '';
+        }
+
+        const div = document.createElement('div');
+        div.className = 'placed-brick';
+        div.style.backgroundColor = color;
+        div.innerHTML = `<span>${text}</span> <button class="delete-btn" onclick="this.parentElement.remove()">X</button>`;
+        
+        area.appendChild(div);
+    }
+</script>
+
+</body>
+</html>
